@@ -15,3 +15,8 @@ export default function IndexPage() {
     </Suspense>
   );
 }
+
+NEXTAUTH_SECRET=zX7U9lAq9CeS+hAvUPZuysl63GlZgPG60lrSEDkFQ/8=
+NEXTAUTH_URL=http://localhost:3000
+
+API_URL=http://localhost:8080/api
