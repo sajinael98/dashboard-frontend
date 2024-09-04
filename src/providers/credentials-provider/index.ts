@@ -8,8 +8,10 @@ export const credentialsProvider = CredentialsProvider({
         password: { label: "Password", type: "password" }
     },
     async authorize(credentials, req) {
-        await axiosInstance.post("http://localhost:8080/sys-auth/login")
-        console.log("???????????")
-        return {id:1};
+        const response = await axiosInstance.post("http://localhost:8080/sys-auth/login", {
+            username: credentials?.username,
+            password: credentials?.password
+        })
+        return { ...response.data };
     },
 })

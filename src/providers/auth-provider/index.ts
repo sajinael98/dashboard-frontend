@@ -1,15 +1,21 @@
 import { AuthProvider } from "@refinedev/core";
-import { axiosInstance } from "@refinedev/simple-rest";
-import { signIn, signOut } from "next-auth/react";
+import { getSession, signIn, signOut } from "next-auth/react";
+import dayjs from "dayjs";
 
 export const authProvider: AuthProvider = {
-    login: async () => {
-        signIn("credentials", {
-          callbackUrl: "/",
-          redirect: true,
+    login: async ({ email, password }) => {
+        const response = await signIn("credentials", {
+            callbackUrl: "/",
+            redirect: true,
+            username: email,
+            password
         });
+        console.log(response)
         return {
             success: true,
+            successNotification: {
+                message: 'welcome'
+            }
         };
     },
     logout: async () => {
@@ -34,13 +40,18 @@ export const authProvider: AuthProvider = {
         };
     },
     check: async () => {
-        if (status === "unauthenticated") {
+        const session = await getSession()
+
+        const expirationDate = dayjs(session?.expires);
+        const now = dayjs();
+        const hasExpired = expirationDate.isBefore(now);
+        
+        if (hasExpired) {
             return {
                 authenticated: false,
                 redirectTo: "/login",
             };
         }
-
         return {
             authenticated: true,
         };
