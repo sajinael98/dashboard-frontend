@@ -1,30 +1,16 @@
-"use client";
+"use client"
 
-import { useLogin } from "@refinedev/core";
+import { useDocumentTitle } from '@mantine/hooks'
+import { AuthPage } from '@refinedev/mantine'
+import { axiosInstance } from '@refinedev/simple-rest'
+import axios from 'axios'
+import React, { useEffect } from 'react'
 
-export default function Login() {
-  const { mutate: login } = useLogin();
-
+const LoginPage = () => {
+  useDocumentTitle('Login')
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-    >
-      <button onClick={() => login({})}>Sign in</button>
-      <p>
-        Powered by
-        <img
-          style={{ padding: "0 5px" }}
-          alt="Auth0"
-          src="https://refine.ams3.cdn.digitaloceanspaces.com/superplate-auth-icons%2Fauth0-2.svg"
-        />
-        Auth0
-      </p>
-    </div>
-  );
+    <AuthPage />
+  )
 }
+
+export default LoginPage

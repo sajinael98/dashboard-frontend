@@ -13,26 +13,36 @@
     "refine": "refine"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@mantine/core": "^5.10.5",
+    "@mantine/form": "^5.10.5",
+    "@mantine/hooks": "^5.10.5",
+    "@mantine/notifications": "^5.10.5",
     "@refinedev/cli": "^2.16.21",
     "@refinedev/core": "^4.47.1",
     "@refinedev/devtools": "^1.1.32",
-    "@refinedev/nextjs-router": "^6.0.0",
     "@refinedev/kbar": "^1.3.6",
-    "next": "^14.1.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "@refinedev/mantine": "^2.33.0",
+    "@refinedev/nextjs-router": "^6.0.0",
+    "@refinedev/react-table": "^5.6.13",
     "@refinedev/simple-rest": "^5.0.1",
-    "next-auth": "^4.24.5"
+    "@tabler/icons-react": "^3.14.0",
+    "@tanstack/react-table": "^8.20.5",
+    "axios": "^1.7.7",
+    "next": "^14.1.0",
+    "next-auth": "^4.24.5",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
+    "@types/node": "^18.16.2",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "@types/node": "^18.16.2",
     "@typescript-eslint/parser": "^6.21.0",
-    "typescript": "^5.4.2",
     "cross-env": "^7.0.3",
     "eslint": "^8",
-    "eslint-config-next": "^14.1.0"
+    "eslint-config-next": "^14.1.0",
+    "typescript": "^5.4.2"
   },
   "refine": {
     "projectId": "96WBoA-IGnlWx-MAdYEH"

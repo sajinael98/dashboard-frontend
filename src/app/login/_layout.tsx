@@ -6,11 +6,11 @@ import React from "react";
 export default async function LoginLayout({
   children,
 }: React.PropsWithChildren) {
-  const data = await getData();
+  // const data = await getData();
 
-  if (data.session?.user) {
-    return redirect("/");
-  }
+  // if (data.session?.user) {
+  //   return redirect("/");
+  // }
 
   return <>{children}</>;
 }
