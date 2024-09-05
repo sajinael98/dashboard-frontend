@@ -1,18 +1,18 @@
 "use client";
 
-import { GitHubBanner, Refine, type AuthProvider } from "@refinedev/core";
+import { Refine } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
-import { SessionProvider, signIn, signOut, useSession } from "next-auth/react";
-import { usePathname } from "next/navigation";
+import { SessionProvider } from "next-auth/react";
 import React from "react";
 
 import routerProvider from "@refinedev/nextjs-router";
 
-import { dataProvider } from "@providers/data-provider";
-import "@styles/global.css";
 import { Global, MantineProvider } from "@mantine/core";
-import { RefineThemes, useNotificationProvider } from "@refinedev/mantine";
 import { authProvider } from "@providers/auth-provider";
+import { dataProvider } from "@providers/data-provider";
+import { RefineThemes, useNotificationProvider } from "@refinedev/mantine";
+import "@styles/global.css";
+import { IconShield, IconUsersGroup } from "@tabler/icons-react";
 
 type RefineContextProps = {};
 
@@ -50,6 +50,23 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
             dataProvider={dataProvider}
             authProvider={authProvider}
             notificationProvider={useNotificationProvider}
+            resources={[
+              {
+                name: 'administration',
+                meta: {
+                  label: 'Administration',
+                  icon: <IconShield />
+                }
+              },
+              {
+                name: 'roles',
+                list: '/roles',
+                meta: {
+                  parent: 'administration',
+                  icon: <IconUsersGroup />
+                }
+              }
+            ]}
             options={{
               syncWithLocation: true,
               warnWhenUnsavedChanges: true,
