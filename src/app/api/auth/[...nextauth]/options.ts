@@ -1,6 +1,5 @@
 import { credentialsProvider } from "@providers/credentials-provider";
 import { AuthOptions } from "next-auth";
-import Auth0Provider from "next-auth/providers/auth0";
 
 const authOptions: AuthOptions = {
   pages: {
@@ -13,6 +12,16 @@ const authOptions: AuthOptions = {
   providers: [
     credentialsProvider
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+        return { ...token, ...user }
+    },
+    async session({ session, token }) {
+        session.user = token as any
+        return session;
+    },
+
+}
 };
 
 export default authOptions;

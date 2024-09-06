@@ -5,12 +5,11 @@ import dayjs from "dayjs";
 export const authProvider: AuthProvider = {
     login: async ({ email, password }) => {
         const response = await signIn("credentials", {
-            callbackUrl: "/",
+            callbackUrl: "/roles",
             redirect: true,
             username: email,
             password
         });
-        console.log(response)
         return {
             success: true,
             successNotification: {

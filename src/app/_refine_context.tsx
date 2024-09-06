@@ -8,9 +8,10 @@ import React from "react";
 import routerProvider from "@refinedev/nextjs-router";
 
 import { Global, MantineProvider } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
 import { authProvider } from "@providers/auth-provider";
 import { dataProvider } from "@providers/data-provider";
-import { RefineThemes, useNotificationProvider } from "@refinedev/mantine";
+import { RefineThemes } from "@refinedev/mantine";
 import "@styles/global.css";
 import { IconShield, IconUsersGroup } from "@tabler/icons-react";
 
@@ -44,38 +45,41 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
           withNormalizeCSS
           withGlobalStyles
         >
-          <Global styles={{ body: { WebkitFontSmoothing: 'auto' } }} />
-          <Refine
-            routerProvider={routerProvider}
-            dataProvider={dataProvider}
-            authProvider={authProvider}
-            notificationProvider={useNotificationProvider}
-            resources={[
-              {
-                name: 'administration',
-                meta: {
-                  label: 'Administration',
-                  icon: <IconShield />
+          <NotificationsProvider>
+
+            <Global styles={{ body: { WebkitFontSmoothing: 'auto' } }} />
+            <Refine
+              routerProvider={routerProvider}
+              dataProvider={dataProvider}
+              authProvider={authProvider}
+              // notificationProvider={useNotificationProvider}
+              resources={[
+                {
+                  name: 'administration',
+                  meta: {
+                    label: 'Administration',
+                    icon: <IconShield />
+                  }
+                },
+                {
+                  name: 'roles',
+                  list: '/roles',
+                  meta: {
+                    parent: 'administration',
+                    icon: <IconUsersGroup />
+                  }
                 }
-              },
-              {
-                name: 'roles',
-                list: '/roles',
-                meta: {
-                  parent: 'administration',
-                  icon: <IconUsersGroup />
-                }
-              }
-            ]}
-            options={{
-              syncWithLocation: true,
-              warnWhenUnsavedChanges: true,
-              useNewQueryKeys: true,
-            }}
-          >
-            {props.children}
-            <RefineKbar />
-          </Refine>
+              ]}
+              options={{
+                syncWithLocation: true,
+                warnWhenUnsavedChanges: true,
+                useNewQueryKeys: true,
+              }}
+            >
+              {props.children}
+              <RefineKbar />
+            </Refine>
+          </NotificationsProvider>
         </MantineProvider>
       </RefineKbarProvider>
     </>
