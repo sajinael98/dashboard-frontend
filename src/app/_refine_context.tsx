@@ -13,7 +13,7 @@ import { authProvider } from "@providers/auth-provider";
 import { dataProvider } from "@providers/data-provider";
 import { RefineThemes } from "@refinedev/mantine";
 import "@styles/global.css";
-import { IconShield, IconUsersGroup } from "@tabler/icons-react";
+import { IconLock, IconShield, IconUsersGroup } from "@tabler/icons-react";
 
 type RefineContextProps = {};
 
@@ -67,6 +67,14 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
                   meta: {
                     parent: 'administration',
                     icon: <IconUsersGroup />
+                  }
+                },
+                {
+                  name: 'permissions',
+                  list: '/permissions',
+                  meta: {
+                    parent: 'administration',
+                    icon: <IconLock />
                   }
                 }
               ]}

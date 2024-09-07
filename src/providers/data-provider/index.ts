@@ -1,7 +1,7 @@
 "use client";
 
 import { showNotification } from "@mantine/notifications";
-import { DataProvider, HttpError } from "@refinedev/core";
+import { DataProvider } from "@refinedev/core";
 import dataProviderSimpleRest, { axiosInstance } from "@refinedev/simple-rest";
 import { getSession } from "next-auth/react";
 const backendUrl = '/backend-api'
@@ -41,6 +41,19 @@ export const dataProvider: DataProvider = {
         return simpleDataProvider.getOne(params)
     },
     getList({ resource, pagination, sorters, filters, meta }) {
+        if (meta?.headers) {
+            if (meta.headers['x-resource-id'] && meta.headers['x-sub-resource']) {
+                return axiosInstance
+                    .get(`${backendUrl}/${resource}/${meta.headers['x-resource-id']}/${meta.headers['x-sub-resource']}`)
+                    .then((res) => {
+                        console.log(res)
+                        return {
+                            data: res.data.data,
+                            total: res.data.total
+                        }
+                    });
+            }
+        }
         const params = new URLSearchParams();
         if (pagination?.current) {
             params.append("page", pagination.current.toFixed());
@@ -66,5 +79,11 @@ export const dataProvider: DataProvider = {
     },
     deleteOne(params) {
         return simpleDataProvider.deleteOne(params)
+    },
+    custom({ method, url, payload }) {
+        if (method === 'post') {
+            return axiosInstance.post(`${backendUrl}/${url}`, payload)
+        }
+        return new Promise(() => { })
     },
 }
