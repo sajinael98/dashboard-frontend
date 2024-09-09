@@ -13,11 +13,11 @@ interface PermissionModalFormProps {
 }
 
 const schema = z.object({
-    entity: z.string().min(1, { message: 'is required' }),
-    create: z.boolean(),
-    read: z.boolean(),
-    update: z.boolean(),
-    delete: z.boolean(),
+    entity: z.string(),
+    createR: z.boolean(),
+    readR: z.boolean(),
+    editR: z.boolean(),
+    deleteR: z.boolean(),
 })
 
 const PermissionModalForm = ({ roleId, close, opened }: PermissionModalFormProps) => {
@@ -45,6 +45,7 @@ const PermissionModalForm = ({ roleId, close, opened }: PermissionModalFormProps
     })
 
     function saveHandler(values: any) {
+        console.log(">>>")
         mutate({
             method: 'post',
             url: `roles/${roleId}/permissions`,
