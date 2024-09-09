@@ -19,7 +19,7 @@ const PermissionCard = ({ data: permission }: PermissionCardProps) => {
       onSettled(data, error, variables, context) {
         if ((data.status as number) === 200) {
           queryClient.setQueryData(
-            ["roles", permission.roleId, "permissions"],
+            ["roles", permission.roleId.toString(), "permissions"],
             () => ({
               data: data?.data.data,
               total: data?.data.data.length,

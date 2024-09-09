@@ -35,7 +35,6 @@ const PermissionModalForm = ({ roleId, close, opened }: PermissionModalFormProps
     const { mutate } = useCustomMutation({
         mutationOptions: {
             onSettled(data, error, variables, context) {
-                const { data: permissions } = data
                 if ((data.status as number) === 200) {
                     close()
                     queryClient.setQueryData(['roles', roleId, 'permissions'], () => ({ data: data?.data.data, total: data?.data.data.length }))
