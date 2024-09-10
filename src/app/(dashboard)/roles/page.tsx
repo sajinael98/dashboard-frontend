@@ -36,7 +36,7 @@ const RolesListPage = () => {
         );
       },
     },
-  ], [])
+  ], [modalForm])
 
   const {
     getHeaderGroups,

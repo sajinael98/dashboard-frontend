@@ -22,7 +22,7 @@ const schema = z.object({
 
 const PermissionModalForm = ({ roleId, close, opened }: PermissionModalFormProps) => {
     const queryClient = useQueryClient()
-    const { getInputProps, onSubmit } = useForm({
+    const { getInputProps, onSubmit, reset } = useForm({
         initialValues: {
             entity: '',
             createR: false,
@@ -35,8 +35,9 @@ const PermissionModalForm = ({ roleId, close, opened }: PermissionModalFormProps
     const { mutate } = useCustomMutation({
         mutationOptions: {
             onSettled(data, error, variables, context) {
-                if ((data.status as number) === 200) {
+                if (data && ((data as any).status as number) === 200) {
                     close()
+                    reset()
                     queryClient.setQueryData(['roles', roleId, 'permissions'], () => ({ data: data?.data.data, total: data?.data.data.length }))
                 }
             },
@@ -44,7 +45,6 @@ const PermissionModalForm = ({ roleId, close, opened }: PermissionModalFormProps
     })
 
     function saveHandler(values: any) {
-        console.log(">>>")
         mutate({
             method: 'post',
             url: `roles/${roleId}/permissions`,

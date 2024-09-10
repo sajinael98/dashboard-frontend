@@ -9,7 +9,7 @@ interface UseModalFormProps extends UseMantineModalFormProps {
 
 export function useModalForm({ schema, ...props }: UseModalFormProps) {
     const [action, setAction] = useState<'create' | 'edit'>('create');
-   
+
     const createDefaultOptions = {
         refineCoreProps: { action: 'create' },
         initialValues: props.initialValues,
@@ -40,17 +40,18 @@ export function useModalForm({ schema, ...props }: UseModalFormProps) {
         });
     }
 
+    const { isDirty, modal, setValues, reset } = modalCreateForm
     useEffect(() => {
-        if (modalCreateForm.isDirty() && !modalCreateForm.modal.visible) {
-            modalCreateForm.setValues(props.initialValues as Record<string, unknown>);
+        if (isDirty() && !modal.visible) {
+            setValues(props.initialValues as Record<string, unknown>);
         }
-    }, [modalCreateForm.modal.visible, modalCreateForm.isDirty()])
+    }, [modal.visible, isDirty, props.initialValues, setValues])
 
     useEffect(() => {
-        if (modalEditForm.isDirty() && !modalEditForm.modal.visible) {
-            modalEditForm.reset();
+        if (isDirty() && !modal.visible) {
+            reset();
         }
-    }, [modalEditForm.modal.visible, modalEditForm.isDirty()])
+    }, [modal.visible, isDirty, reset])
 
     if (action === 'create') {
         return { createHandler, editHandler, ...modalCreateForm }
