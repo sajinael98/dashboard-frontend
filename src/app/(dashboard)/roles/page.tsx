@@ -10,7 +10,6 @@ import { useMemo } from 'react'
 
 const RolesListPage = () => {
   const modalForm = useRoleModalForm()
-  
   const columns = useMemo<ColumnDef<RoleResponse>[]>(() => [
     {
       accessorKey: 'role',
@@ -36,7 +35,7 @@ const RolesListPage = () => {
         );
       },
     },
-  ], [modalForm])
+  ], [])
 
   const {
     getHeaderGroups,
