@@ -73,6 +73,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
                   meta: {
                     parent: "administration",
                     icon: <IconUser />,
+
                   },
                 },
                 {
