@@ -6,7 +6,14 @@ import { AuthPage } from '@refinedev/mantine'
 const LoginPage = () => {
   useDocumentTitle('Login')
   return (
-    <AuthPage />
+    <AuthPage
+      formProps={{
+        initialValues: {
+          email: 'saji.nael.98@gmail.com',
+          password: '123456'
+        }
+      }}
+    />
   )
 }
 

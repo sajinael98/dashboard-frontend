@@ -13,7 +13,12 @@ import { authProvider } from "@providers/auth-provider";
 import { dataProvider } from "@providers/data-provider";
 import { RefineThemes } from "@refinedev/mantine";
 import "@styles/global.css";
-import { IconLock, IconShield, IconUsersGroup } from "@tabler/icons-react";
+import {
+  IconLock,
+  IconShield,
+  IconUser,
+  IconUsersGroup,
+} from "@tabler/icons-react";
 
 type RefineContextProps = {};
 
@@ -46,8 +51,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
           withGlobalStyles
         >
           <NotificationsProvider>
-
-            <Global styles={{ body: { WebkitFontSmoothing: 'auto' } }} />
+            <Global styles={{ body: { WebkitFontSmoothing: "auto" } }} />
             <Refine
               routerProvider={routerProvider}
               dataProvider={dataProvider}
@@ -55,28 +59,38 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
               // notificationProvider={useNotificationProvider}
               resources={[
                 {
-                  name: 'administration',
+                  name: "administration",
                   meta: {
-                    label: 'Administration',
-                    icon: <IconShield />
-                  }
+                    label: "Administration",
+                    icon: <IconShield />,
+                  },
                 },
                 {
-                  name: 'roles',
-                  list: '/roles',
+                  name: "users",
+                  list: "/users",
+                  create: "/users/create",
+                  edit: "/users/edit/:id",
                   meta: {
-                    parent: 'administration',
-                    icon: <IconUsersGroup />
-                  }
+                    parent: "administration",
+                    icon: <IconUser />,
+                  },
                 },
                 {
-                  name: 'permissions',
-                  list: '/permissions',
+                  name: "roles",
+                  list: "/roles",
                   meta: {
-                    parent: 'administration',
-                    icon: <IconLock />
-                  }
-                }
+                    parent: "administration",
+                    icon: <IconUsersGroup />,
+                  },
+                },
+                {
+                  name: "permissions",
+                  list: "/permissions",
+                  meta: {
+                    parent: "administration",
+                    icon: <IconLock />,
+                  },
+                },
               ]}
               options={{
                 syncWithLocation: true,
