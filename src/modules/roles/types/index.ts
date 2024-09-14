@@ -1,5 +1,5 @@
 interface RoleResponse {
-    id: number;
-    role: string;
-    enabled: boolean;
+  id: number;
+  role: string;
+  enabled: boolean;
 }

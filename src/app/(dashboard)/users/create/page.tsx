@@ -6,7 +6,7 @@ import { UserForm } from "@modules/users/presentation";
 import { Create } from "@refinedev/mantine";
 
 const CreateUserPage = () => {
-  const { saveButtonProps, refineCore, ...form } = useUserForm()
+  const { saveButtonProps, refineCore, ...form } = useUserForm();
   return (
     <Create saveButtonProps={saveButtonProps}>
       <FormProvider form={form as any}>

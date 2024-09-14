@@ -1,7 +1,3 @@
 {
-    "resources": [
-        "users",
-        "roles",
-        "permissions"
-    ]
+  "resources": ["users", "roles", "permissions"]
 }

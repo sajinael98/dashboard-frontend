@@ -20,7 +20,7 @@ const PermissionsList = ({ roleId }: PermissionsListProps) => {
       queryKey: ["roles", roleId.toString(), "permissions"],
     },
   });
-  
+
   return (
     <SimpleGrid
       breakpoints={[
@@ -38,7 +38,7 @@ const PermissionsList = ({ roleId }: PermissionsListProps) => {
         },
       ]}
     >
-      {data?.data.map((permission) => (
+      {data?.data?.map((permission) => (
         <PermissionCard
           key={permission.id}
           data={{ ...permission, roleId: roleId } as any}

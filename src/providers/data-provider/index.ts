@@ -40,20 +40,19 @@ export const api = axiosInstance;
 export const dataProvider: DataProvider = {
   getApiUrl: () => backendUrl,
   create({ resource, variables }) {
-
     return axiosInstance.post(`${backendUrl}/${resource}`, variables, {
       headers: {
         "x-entity": resource,
-        "x-action": "create"
-      }
+        "x-action": "create",
+      },
     });
   },
   getOne({ resource, id }) {
     return axiosInstance.get(`${backendUrl}/${resource}/${id}`, {
       headers: {
         "x-entity": resource,
-        "x-action": "read"
-      }
+        "x-action": "read",
+      },
     });
   },
   getList({ resource, pagination, sorters, filters, meta }) {
@@ -65,8 +64,8 @@ export const dataProvider: DataProvider = {
             {
               headers: {
                 "x-entity": resource,
-                "x-action": "read"
-              }
+                "x-action": "read",
+              },
             }
           )
           .then((res) => {
@@ -95,8 +94,8 @@ export const dataProvider: DataProvider = {
         params,
         headers: {
           "x-entity": resource,
-          "x-action": "read"
-        }
+          "x-action": "read",
+        },
       })
       .then((res) => {
         return {
@@ -109,28 +108,36 @@ export const dataProvider: DataProvider = {
     return axiosInstance.patch(`${backendUrl}/${resource}/${id}`, variables, {
       headers: {
         "x-entity": resource,
-        "x-action": "update"
-      }
+        "x-action": "update",
+      },
     });
   },
   deleteOne({ id, resource }) {
     return axiosInstance.delete(`${backendUrl}/${resource}/${id}`, {
       headers: {
         "x-entity": resource,
-        "x-action": "delete"
-      }
+        "x-action": "delete",
+      },
     });
   },
   custom({ method, url, payload }) {
     switch (method.toLocaleLowerCase()) {
       case "post":
-        return axiosInstance.post(`${backendUrl}/${url}`, payload);
+        return axiosInstance
+          .post(`${backendUrl}/${url}`, payload)
+          .then((res) => res.data);
       case "get":
-        return axiosInstance.get(`${backendUrl}/${url}`);
+        return axiosInstance
+          .get(`${backendUrl}/${url}`)
+          .then((res) => res.data);
       case "patch":
-        return axiosInstance.patch(`${backendUrl}/${url}`, payload);
+        return axiosInstance
+          .patch(`${backendUrl}/${url}`, payload)
+          .then((res) => res.data);
       case "delete":
-        return axiosInstance.delete(`${backendUrl}/${url}/${(payload as any)?.id as any}`);
+        return axiosInstance
+          .delete(`${backendUrl}/${url}/${(payload as any)?.id as any}`)
+          .then((res) => res.data);
       default:
         throw Error("Method: " + method + " is not supported");
     }

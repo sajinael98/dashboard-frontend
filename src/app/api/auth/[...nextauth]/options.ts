@@ -3,25 +3,22 @@ import { AuthOptions } from "next-auth";
 
 const authOptions: AuthOptions = {
   pages: {
-    signIn: '/login'
+    signIn: "/login",
   },
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
     maxAge: 24 * 60 * 60, // 1 day
   },
-  providers: [
-    credentialsProvider
-  ],
+  providers: [credentialsProvider],
   callbacks: {
     async jwt({ token, user }) {
-        return { ...token, ...user }
+      return { ...token, ...user };
     },
     async session({ session, token }) {
-        session.user = token as any
-        return session;
+      session.user = token as any;
+      return session;
     },
-
-}
+  },
 };
 
 export default authOptions;

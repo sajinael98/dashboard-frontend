@@ -19,6 +19,7 @@ import {
   IconUser,
   IconUsersGroup,
 } from "@tabler/icons-react";
+import { accessControlPorvider } from "@providers/access-control-provider";
 
 type RefineContextProps = {};
 
@@ -56,6 +57,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
               routerProvider={routerProvider}
               dataProvider={dataProvider}
               authProvider={authProvider}
+              accessControlProvider={accessControlPorvider}
               // notificationProvider={useNotificationProvider}
               resources={[
                 {
@@ -73,7 +75,6 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
                   meta: {
                     parent: "administration",
                     icon: <IconUser />,
-
                   },
                 },
                 {

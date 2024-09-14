@@ -64,9 +64,9 @@ const PermissionPage = () => {
             onChange={(value) => {
               let url = "/permissions";
               if (value) {
-                url = `${url}?roleId=${value}`
+                url = `${url}?roleId=${value}`;
               }
-              router.push(url)
+              router.push(url);
             }}
             {...selectProps}
             withinPortal

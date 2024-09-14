@@ -1,1 +1,1 @@
-export * from './use-role-modal-form'
+export * from "./use-role-modal-form";
