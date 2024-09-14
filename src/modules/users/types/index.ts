@@ -4,3 +4,8 @@ export interface User {
   username: string;
   email: string;
 }
+
+export interface UserRole {
+  id: number;
+  role: string;
+}

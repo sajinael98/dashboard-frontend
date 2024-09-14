@@ -1,6 +1,5 @@
 "use client"
 
-import FormSection from '@components/FormSection';
 import { FormProvider } from '@hooks/use-form';
 import { Button } from '@mantine/core';
 import { useUserForm } from '@modules/users/infrastructure';
@@ -8,7 +7,6 @@ import { UserForm } from '@modules/users/presentation';
 import { useResourceParams } from '@refinedev/core';
 import { Edit } from '@refinedev/mantine';
 import { useRouter } from 'next/navigation';
-import React from 'react'
 
 const EditUserPage = () => {
     const { saveButtonProps, refineCore, ...form } = useUserForm()
@@ -33,9 +31,6 @@ const EditUserPage = () => {
         >
             <FormProvider form={form as any}>
                 <UserForm />
-                <FormSection title='Roles'>
-
-                </FormSection>
             </FormProvider>
         </Edit>
     );

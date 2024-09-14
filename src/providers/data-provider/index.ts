@@ -2,7 +2,7 @@
 
 import { showNotification } from "@mantine/notifications";
 import { DataProvider } from "@refinedev/core";
-import dataProviderSimpleRest, { axiosInstance } from "@refinedev/simple-rest";
+import { axiosInstance } from "@refinedev/simple-rest";
 import { getSession } from "next-auth/react";
 const backendUrl = "/backend-api";
 
@@ -36,22 +36,38 @@ axiosInstance.interceptors.request.use(
   }
 );
 export const api = axiosInstance;
-const simpleDataProvider = dataProviderSimpleRest(backendUrl, axiosInstance);
 
 export const dataProvider: DataProvider = {
   getApiUrl: () => backendUrl,
-  create(params) {
-    return simpleDataProvider.create(params);
+  create({ resource, variables }) {
+
+    return axiosInstance.post(`${backendUrl}/${resource}`, variables, {
+      headers: {
+        "x-entity": resource,
+        "x-action": "create"
+      }
+    });
   },
-  getOne(params) {
-    return simpleDataProvider.getOne(params);
+  getOne({ resource, id }) {
+    return axiosInstance.get(`${backendUrl}/${resource}/${id}`, {
+      headers: {
+        "x-entity": resource,
+        "x-action": "read"
+      }
+    });
   },
   getList({ resource, pagination, sorters, filters, meta }) {
     if (meta?.headers) {
       if (meta.headers["x-resource-id"] && meta.headers["x-sub-resource"]) {
         return axiosInstance
           .get(
-            `${backendUrl}/${resource}/${meta.headers["x-resource-id"]}/${meta.headers["x-sub-resource"]}`
+            `${backendUrl}/${resource}/${meta.headers["x-resource-id"]}/${meta.headers["x-sub-resource"]}`,
+            {
+              headers: {
+                "x-entity": resource,
+                "x-action": "read"
+              }
+            }
           )
           .then((res) => {
             return {
@@ -75,7 +91,13 @@ export const dataProvider: DataProvider = {
     });
 
     return axiosInstance
-      .get(`${backendUrl}/${resource}`, { params })
+      .get(`${backendUrl}/${resource}`, {
+        params,
+        headers: {
+          "x-entity": resource,
+          "x-action": "read"
+        }
+      })
       .then((res) => {
         return {
           data: res.data.data,
@@ -83,11 +105,21 @@ export const dataProvider: DataProvider = {
         };
       });
   },
-  update(params) {
-    return simpleDataProvider.update(params);
+  update({ id, resource, variables }) {
+    return axiosInstance.patch(`${backendUrl}/${resource}/${id}`, variables, {
+      headers: {
+        "x-entity": resource,
+        "x-action": "update"
+      }
+    });
   },
-  deleteOne(params) {
-    return simpleDataProvider.deleteOne(params);
+  deleteOne({ id, resource }) {
+    return axiosInstance.delete(`${backendUrl}/${resource}/${id}`, {
+      headers: {
+        "x-entity": resource,
+        "x-action": "delete"
+      }
+    });
   },
   custom({ method, url, payload }) {
     switch (method.toLocaleLowerCase()) {
