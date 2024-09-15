@@ -1,5 +1,6 @@
 "use client";
 
+import Authenticated from "@components/Authenticated";
 import { FormProvider } from "@hooks/use-form";
 import { Button, Menu, Modal, PasswordInput, Stack } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
@@ -80,11 +81,15 @@ const EditUserPage = () => {
                   <Button leftIcon={<IconMenu2 />}>Menu</Button>
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <Menu.Item onClick={navigateToRoleAssign}>
-                    {" "}
-                    Role Assignment
-                  </Menu.Item>
-                  <Menu.Item onClick={open}> Change Password</Menu.Item>
+                  <Authenticated roles={['ROLE_ADMIN']}>
+                    <Menu.Item onClick={navigateToRoleAssign}>
+                      {" "}
+                      Role Assignment
+                    </Menu.Item>
+                  </Authenticated>
+                  <Authenticated roles={['ROLE_ADMIN']}>
+                    <Menu.Item onClick={open}> Change Password</Menu.Item>
+                  </Authenticated>
                 </Menu.Dropdown>
               </Menu>
             </>
