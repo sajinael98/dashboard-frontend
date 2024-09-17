@@ -34,6 +34,7 @@ const Authenticated = ({
         const hasRoles =
           rolesList.filter((role) => roles.includes(role)).length ===
           roles.length;
+          console.log(hasRoles)
         if (hasRoles) {
           setVisible(true);
         }
@@ -48,10 +49,10 @@ const Authenticated = ({
     }
   }, [data, isSuccess]);
 
-  if (isLoading || visible) {
-    return null;
+  if (visible) {
+    return children;
   }
-  return children;
+  return null;
 };
 
 export default Authenticated;

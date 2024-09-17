@@ -10,6 +10,11 @@ const authOptions: AuthOptions = {
     maxAge: 24 * 60 * 60, // 1 day
   },
   providers: [credentialsProvider],
+  events:{
+    signIn(message) {
+        
+    },
+  },
   callbacks: {
     async jwt({ token, user }) {
       return { ...token, ...user };

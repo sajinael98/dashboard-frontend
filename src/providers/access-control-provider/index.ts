@@ -29,7 +29,20 @@ export const accessControlPorvider: AccessControlProvider = {
         permissions: string[];
       };
       const permissions = userPermissions.permissions as string[];
-      const tempAction = action === "list" ? "read" : action;
+   
+      let tempAction;
+      switch (action) {
+        case "list": {
+          tempAction = "read";
+          break;
+        }
+        case "edit": {
+          tempAction = "update";
+          break;
+        }
+        default:
+          tempAction = action;
+      }
       const permission = `${tempAction.toUpperCase()}_${resource?.toUpperCase()}`;
       return {
         can: permissions.includes(permission),
