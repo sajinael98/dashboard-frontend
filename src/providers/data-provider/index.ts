@@ -120,23 +120,31 @@ export const dataProvider: DataProvider = {
       },
     });
   },
-  custom({ method, url, payload }) {
+  custom({ method, url, payload, headers }) {
     switch (method.toLocaleLowerCase()) {
       case "post":
         return axiosInstance
-          .post(`${backendUrl}/${url}`, payload)
+          .post(`${backendUrl}/${url}`, payload, {
+            headers
+          })
           .then((res) => res.data);
       case "get":
         return axiosInstance
-          .get(`${backendUrl}/${url}`)
+          .get(`${backendUrl}/${url}`, {
+            headers
+          })
           .then((res) => res.data);
       case "patch":
         return axiosInstance
-          .patch(`${backendUrl}/${url}`, payload)
+          .patch(`${backendUrl}/${url}`, payload, {
+            headers
+          })
           .then((res) => res.data);
       case "delete":
         return axiosInstance
-          .delete(`${backendUrl}/${url}/${(payload as any)?.id as any}`)
+          .delete(`${backendUrl}/${url}/${(payload as any)?.id as any}`, {
+            headers
+          })
           .then((res) => res.data);
       default:
         throw Error("Method: " + method + " is not supported");

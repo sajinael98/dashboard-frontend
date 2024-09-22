@@ -14,8 +14,11 @@ import { dataProvider } from "@providers/data-provider";
 import { RefineThemes } from "@refinedev/mantine";
 import "@styles/global.css";
 import {
+  IconCarrot,
+  IconChefHat,
   IconLock,
   IconShield,
+  IconToolsKitchen2,
   IconUser,
   IconUsersGroup,
 } from "@tabler/icons-react";
@@ -60,6 +63,36 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
               accessControlProvider={accessControlPorvider}
               // notificationProvider={useNotificationProvider}
               resources={[
+                {
+                  name: "food menu",
+                  meta: {
+                    icon: <IconChefHat />,
+                    label: "Food Menu"
+                  }
+                }
+                ,
+                {
+                  name: "categories",
+                  list: "/categories",
+                  meta: {
+                    icon: <IconToolsKitchen2 />,
+                    parent: "food menu"
+                  }
+                },
+                {
+                  name: "demo",
+                  list: "/demo"
+                },
+                {
+                  name: "items",
+                  list: "/items",
+                  create: "/items/create",
+                  edit: "/items/edit/:id",
+                  meta: {
+                    icon: <IconCarrot />,
+                    parent: "food menu"
+                  }
+                },
                 {
                   name: "administration",
                   meta: {

@@ -7,7 +7,7 @@ const FormGrid = ({ children }: PropsWithChildren) => {
       breakpoints={[
         {
           minWidth: "lg",
-          cols: 3,
+          cols: 2,
         },
         {
           minWidth: "md",
