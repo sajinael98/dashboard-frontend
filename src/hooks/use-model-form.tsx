@@ -2,15 +2,21 @@ import { useEffect, useState } from "react";
 import {
   UseModalFormProps as UseMantineModalFormProps,
   useModalForm as useMantineModalFOrm,
+  UseModalFormReturnType as UseMantineModalFormReturnType
 } from "@refinedev/mantine";
 import { zodResolver } from "@mantine/form";
 import { ZodSchema } from "zod";
 
-interface UseModalFormProps extends UseMantineModalFormProps {
+export interface UseModalFormProps extends UseMantineModalFormProps {
   schema: ZodSchema<Record<string, any>>;
 }
 
-export function useModalForm({ schema, ...props }: UseModalFormProps) {
+export interface UseModalFormReturn extends UseMantineModalFormReturnType {
+  onCreate: () => void
+  onEdit: (id: number) => void
+}
+
+export function useModalForm({ schema, ...props }: UseModalFormProps): UseModalFormReturn {
   const [action, setAction] = useState<"create" | "edit">("create");
 
   const createDefaultOptions = {
@@ -57,7 +63,7 @@ export function useModalForm({ schema, ...props }: UseModalFormProps) {
   }, [modal.visible, isDirty, reset]);
 
   if (action === "create") {
-    return { createHandler, editHandler, ...modalCreateForm };
+    return { onCreate: createHandler, onEdit: editHandler, ...modalCreateForm };
   }
-  return { createHandler, editHandler, ...modalEditForm };
+  return { onCreate: createHandler, onEdit: editHandler, ...modalEditForm };
 }

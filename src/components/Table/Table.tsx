@@ -15,7 +15,7 @@ interface TableProps {
 const Table = ({ headerGroups, rows, total, page, setPage }: TableProps) => {
   return (
     <>
-      <MantineTable striped highlightOnHover withBorder withColumnBorders>
+      <MantineTable striped highlightOnHover withBorder withColumnBorders fontSize='xs'>
         <TableHeader headerGroups={headerGroups} />
         <TableBody rows={rows} />
       </MantineTable>

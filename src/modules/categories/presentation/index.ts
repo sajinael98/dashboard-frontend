@@ -1,1 +1,1 @@
-export { default as CateogryModalForm } from "./CategoryModalForm"
+export { default as CategoryForm } from "./CategoryForm"

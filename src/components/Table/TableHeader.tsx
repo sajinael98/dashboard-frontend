@@ -13,6 +13,7 @@ const TableHeader = ({ headerGroups }: TableHeaderProps) => {
     <thead>
       {headerGroups.map((headerGroup) => (
         <tr key={headerGroup.id}>
+          <th style={{width: 20}}></th>
           {headerGroup.headers.map((header) => {
             return (
               <th key={header.id}>

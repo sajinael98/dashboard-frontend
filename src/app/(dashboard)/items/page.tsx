@@ -1,14 +1,12 @@
 "use client"
 
-import { Table } from '@components/Table';
-import { Item } from '@modules/items/types';
-import { DeleteButton, EditButton, List } from '@refinedev/mantine'
-import { useTable } from '@refinedev/react-table';
+import ResourceTable from '@components/ResourceTable'
+import { DeleteButton, EditButton } from '@refinedev/mantine';
 import { ColumnDef } from '@tanstack/react-table';
 import React, { useMemo } from 'react'
 
 const ItemsListPage = () => {
-    const columns = useMemo<ColumnDef<Item>[]>(() => [
+    const columns = useMemo<ColumnDef<any>[]>(() => [
         {
             id: "title",
             header: "Title",
@@ -36,29 +34,8 @@ const ItemsListPage = () => {
         },
     ], [])
 
-    const {
-        getHeaderGroups,
-        getRowModel,
-        refineCore: { setCurrent, pageCount, current },
-    } = useTable({
-        columns,
-        state: {
-            pagination: {
-                pageIndex: 0,
-                pageSize: 20,
-            },
-        },
-    });
     return (
-        <List canCreate>
-            <Table
-                headerGroups={getHeaderGroups()}
-                rows={getRowModel().rows}
-                page={current}
-                total={pageCount}
-                setPage={setCurrent}
-            />
-        </List>
+        <ResourceTable columns={columns as any} />
     )
 }
 

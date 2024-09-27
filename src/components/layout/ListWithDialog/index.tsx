@@ -1,43 +1,24 @@
-import { Table } from '@components/Table';
-import { BaseRecord } from '@refinedev/core';
+import { ModalContext } from '@contexts/modal-context';
+import { useDisclosure } from '@mantine/hooks';
 import { List } from '@refinedev/mantine';
-import { useTable } from '@refinedev/react-table';
-import { ColumnDef } from '@tanstack/react-table';
-import React, { PropsWithChildren } from 'react'
+import { ComponentProps, PropsWithChildren } from 'react';
 
-interface ResourceListPageProps {
-    resource: string;
-    columns: ColumnDef<BaseRecord, any>[]
-
+interface ResourceListWithDialogPageProps extends ComponentProps<typeof List> {
 }
 
-const ResourceListWithDialogPage = ({ resource, columns, children }: PropsWithChildren<ResourceListPageProps>) => {
-    const {
-        getHeaderGroups,
-        getRowModel,
-        refineCore: { setCurrent, pageCount, current },
-    } = useTable({
-        columns,
-        state: {
-            pagination: {
-                pageIndex: 0,
-                pageSize: 20,
-            },
-        },
-    });
+const ResourceListWithDialogPage = ({ children, ...props }: PropsWithChildren<ResourceListWithDialogPageProps>) => {
+    const [opened, { close, open }] = useDisclosure(false)
+
     return (
-        <>
-            {children}
-            <List canCreate>
-                <Table
-                    headerGroups={getHeaderGroups()}
-                    rows={getRowModel().rows}
-                    page={current}
-                    total={pageCount}
-                    setPage={setCurrent}
-                />
+        <ModalContext.Provider value={{
+            opened,
+            open,
+            close
+        }}>
+            <List canCreate createButtonProps={{ onClick: () => open() }} {...props}>
+                {children}
             </List>
-        </>
+        </ModalContext.Provider>
     )
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, flexRender } from "@tanstack/react-table";
-import { Flex, Stack, Text, ThemeIcon } from "@mantine/core";
+import { Checkbox, Flex, Stack, Text, ThemeIcon } from "@mantine/core";
 import { IconDatabase } from "@tabler/icons-react";
 
 export interface TableBodyProps {
@@ -10,12 +10,20 @@ export interface TableBodyProps {
 const TableBody = ({ rows }: TableBodyProps) => {
   return (
     <tbody>
+
       {rows.map((row) => (
         <tr key={row.id}>
+          <td>
+
+            <Checkbox />
+
+          </td>
           {row.getVisibleCells().map((cell) => (
-            <td key={cell.id}>
-              {flexRender(cell.column.columnDef.cell, cell.getContext())}
-            </td>
+            <>
+
+              <td key={cell.id}>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </td></>
           ))}
         </tr>
       ))}
