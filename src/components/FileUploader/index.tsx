@@ -1,4 +1,4 @@
-import { Group, Image, SimpleGrid, Text } from "@mantine/core";
+import { Button, Card, Group, Image, SimpleGrid, Text, TextInput } from "@mantine/core";
 import {
     Dropzone,
     IMAGE_MIME_TYPE,
@@ -6,7 +6,7 @@ import {
 } from "@mantine/dropzone";
 import { showNotification } from "@mantine/notifications";
 import { useCustomMutation } from '@refinedev/core';
-import { IconPhoto, IconUpload, IconX } from "@tabler/icons-react";
+import { IconPhoto, IconTrash, IconUpload, IconX } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 
 interface FileUploaderProps {
@@ -14,22 +14,32 @@ interface FileUploaderProps {
     onSuccess: (fileName: string) => void;
 }
 
+const ImageCard = ({ image }: { image: string }) => {
+    return <Card withBorder shadow="sm">
+        <Card.Section p='xs' pos="relative" h={150}>
+            <Image
+                style={{width: "100%", height: "100%", objectFit: "contain"}}
+                src={`/backend-api/files/${image}`}
+            />
+        </Card.Section>
+        <TextInput label="File Name" variant="filled" size="xs" value={image}/>
+        <Card.Section p='xs'>
+            <Group position="right">
+                <Button leftIcon={<IconTrash size=".9rem" />} variant="light" size="xs" color="red">
+                    Delete
+                </Button>
+            </Group>
+        </Card.Section>
+    </Card>
+}
+
 const FileUploader = ({ fileName, onSuccess }: FileUploaderProps) => {
-    const [hasFile, setHasFile] = useState(false)
+    const [image, setImage] = useState<undefined | string>()
     const { mutateAsync } = useCustomMutation()
-    const [files, setFiles] = useState<FileWithPath[]>([]);
 
     useEffect(() => {
-        if (files.length) {
-            setHasFile(false)
-        }
-    }, [files.length])
-    
-    useEffect(() => {
-        if(!!fileName){
-            setHasFile(true)
-        }
-     }, [fileName])
+        setImage(fileName)
+    }, [fileName])
 
     function handleOnDrop(files: FileWithPath[]) {
         mutateAsync({
@@ -44,24 +54,13 @@ const FileUploader = ({ fileName, onSuccess }: FileUploaderProps) => {
                 },
             }
         }).then(() => {
-            setFiles(files)
+            setImage(files[0].name)
             onSuccess(files[0].name)
             showNotification({
                 message: "File has been uploaded successfully."
             })
         })
     }
-
-    const previews = files.map((file, index) => {
-        const imageUrl = URL.createObjectURL(file);
-        return (
-            <Image
-                key={index}
-                src={imageUrl}
-                imageProps={{ onLoad: () => URL.revokeObjectURL(imageUrl) }}
-            />
-        );
-    });
 
     return (
         <>
@@ -113,9 +112,8 @@ const FileUploader = ({ fileName, onSuccess }: FileUploaderProps) => {
                     minWidth: "xs"
                 }
             ]}>
-                {hasFile ? <Image
-                    src={`/backend-api/files/${fileName}`}
-                /> : previews}
+
+                {image && <ImageCard image={image} />}
             </SimpleGrid>
         </>
     )

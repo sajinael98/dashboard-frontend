@@ -12,6 +12,7 @@ import { IconAdjustmentsHorizontal, IconMenu2, IconTrash } from '@tabler/icons-r
 import { ColumnDef, flexRender } from '@tanstack/react-table'
 import { BaseResponse } from '@types'
 import { getDefaults } from '@utils/zod'
+import { useRouter } from 'next/navigation'
 import React, { useMemo, useState } from 'react'
 import { ZodObject } from 'zod'
 
@@ -37,6 +38,7 @@ const ResourceListPage = <T extends BaseResponse>({ columns, menuItems = [], for
     if (!identifier) {
         throw Error("error")
     }
+    const router = useRouter()
     const [action, setAction] = useState<"create" | "edit">("create")
     const { modal, refineCore: { formLoading }, saveButtonProps, ...form } = useModalForm({
         refineCoreProps: {
@@ -109,13 +111,13 @@ const ResourceListPage = <T extends BaseResponse>({ columns, menuItems = [], for
     function closeHandler() {
         modal.close()
     }
-    const createButtonProps: CreateButtonProps = formDialog ? {
+    const createButtonProps: CreateButtonProps | undefined = formDialog ? {
         onClick: () => {
             setAction("create");
             form.reset();
             modal.show(0);
         }
-    } : saveButtonProps
+    } : undefined
     return (
         <>
             {formDialog && <FormProvider form={form as any}>
@@ -188,8 +190,12 @@ const ResourceListPage = <T extends BaseResponse>({ columns, menuItems = [], for
                                     <tr
                                         style={{cursor: "pointer"}}
                                         key={row.id} onDoubleClick={() => {
-                                            setAction("edit")
-                                            modal.show(row.id);
+                                            if(formDialog){
+                                                setAction("edit")
+                                                modal.show(row.id);
+                                            } else{
+                                                router.push(`/${identifier}/edit/${row.id}`)
+                                            }
                                         }}
                                     >
                                         {row.getVisibleCells().map((cell) => {

@@ -1,3 +1,4 @@
+import { InsertListItem } from "@mantine/form/lib/types";
 import { ResourceProps } from "@refinedev/core";
 
 type RESOURCE = ""
@@ -7,7 +8,7 @@ export function createResouce(resource: string, dialogForm: boolean = false): Re
         name: resource,
         list: resourceUri,
     }
-    if(dialogForm){
+    if (dialogForm) {
         resourceProps = {
             ...resourceProps,
         }

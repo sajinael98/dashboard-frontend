@@ -1,21 +1,15 @@
-import { useForm } from "@hooks/use-form";
 import { z } from "zod";
 
-const schema = z.object({
-    title: z.string().min(1, { message: "required" }),
-    price: z.number().min(1, { message: "required" }),
-    category: z.number().min(1, { message: "required" }),
-    image: z.string().min(1, { message: "required" })
-})
+export const sizeSchema = z.object({
+    price: z.number().positive(), // Ensure price is a positive number
+    size: z.string().min(1).max(10), // Limit size string length to 1-10 characters
+});
 
-export function useItemForm() {
-    return useForm({
-        schema,
-        initialValues: {
-            title: undefined,
-            price: 0,
-            category: 0,
-            image: undefined
-        }
-    })
-}
+export const itemSchema = z.object({
+    title: z.string().min(1, { message: "required" }),
+    categoryId: z.number().min(1, { message: "required" }),
+    image: z.string().min(1, { message: "required" }),
+    modifiers: z.string().array().default(["extra cheese"]),
+    description: z.string().default(""),
+    sizes: z.array(sizeSchema).min(1, {message: "sizes must contain at least 1 element"}).default([{ size: "standard", price: 0 }])
+})

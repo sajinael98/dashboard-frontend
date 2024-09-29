@@ -80,10 +80,6 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
                   }
                 },
                 {
-                  name: "demo",
-                  list: "/demo"
-                },
-                {
                   name: "items",
                   list: "/items",
                   create: "/items/create",
